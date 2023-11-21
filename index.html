@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,8 +15,9 @@
             color: #333;
         }
 
-        img, video {
-            max-width: 30%;
+        img,
+        video {
+            max-width: 60%;
             height: auto;
             margin-bottom: 10px;
         }
@@ -36,6 +38,7 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Download 2D Images</h1>
     <div id="2d-images-container"></div>
@@ -46,77 +49,53 @@
     <h1>Download 3D Videos</h1>
     <div id="3d-videos-container"></div>
 
+    <h1>Download Zip File</h1>
+    <a href="images/wetransfer_erfghk_2023-11-21_0758.zip" download="zipdownload">
+        <h1>Download Zip</h1>
+    </a>
+
+
     <script>
         const _2dImages = ['https://w.forfun.com/fetch/62/624e27fde335d49e2dd3c6b75c6027a3.jpeg', 'https://w0.peakpx.com/wallpaper/42/267/HD-wallpaper-nature-scenery-scenery-nature.jpg', 'https://c4.wallpaperflare.com/wallpaper/131/774/322/background-pictures-nature-hd-images-1920x1200-wallpaper-preview.jpg'];
         const _3dImages = ['https://wallpapers.com/images/featured/3d-33q6a18khxgta4ll.jpg', 'https://c4.wallpaperflare.com/wallpaper/323/60/896/3d-2560x1440-desktop-wallpaper-preview.jpg', 'https://i.pinimg.com/originals/f8/20/01/f82001c8ef0f754f9e0d6586acd227f8.jpg'];
         const _3dVideos = ['https://cdn.pixabay.com/vimeo/181785134/robot-5001.mp4?width=640&hash=e834f2be1a6ecaaedce51d092493385171afd9b2', 'https://media.istockphoto.com/id/1488248251/video/modern-city-controlled-by-smart-artificial-intelligence-glowing-wireless-data.mp4?s=mp4-640x640-is&k=20&c=ejh81rxBGM-U6qX3Qw13EITGpc8_oq0RafFY7ffK-rQ=', 'https://media.istockphoto.com/id/1397867940/video/talking-mesh-head-grid-head-conversation.mp4?s=mp4-640x640-is&k=20&c=sFghcZjgO_BkoTf9i0uYtUMadFwWcV0_BnEQvvlzRl4='];
 
-        function createDownloadButton(url, fileName) {
+        function createDownloadButton(url) {
             const button = document.createElement('a');
             button.href = url;
-            button.download = fileName;
+            button.download = 'downloaded_file';
             button.innerHTML = 'Download';
             return button;
         }
 
-        function createImageElement(src, fileName) {
+        function createImageElement(src) {
             const img = document.createElement('img');
             img.src = src;
-
-            const downloadButton = createDownloadButton(src, fileName);
-            
-            const container = document.createElement('div');
-            container.appendChild(img);
-            container.appendChild(downloadButton);
-            container.appendChild(document.createElement('br')); // Add line break for better formatting
-
-            return container;
+            return img;
         }
 
-        function createVideoElement(src, fileName) {
+        function createVideoElement(src) {
             const video = document.createElement('video');
             video.src = src;
             video.controls = true;
-
-            const downloadButton = createDownloadButton(src, fileName);
-            
-            const container = document.createElement('div');
-            container.appendChild(video);
-            container.appendChild(downloadButton);
-            container.appendChild(document.createElement('br')); // Add line break for better formatting
-
-            return container;
+            return video;
         }
 
         function appendElements(containerId, dataArray, createElementFunction) {
             const container = document.getElementById(containerId);
             dataArray.forEach(data => {
-                const element = createElementFunction(data.url, data.fileName);
+                const element = createElementFunction(data);
+                const downloadButton = createDownloadButton(data);
                 container.appendChild(element);
+                container.appendChild(downloadButton);
+                container.appendChild(document.createElement('br')); // Add line break for better formatting
             });
         }
 
-        const _2dImageData = [
-            { url: 'https://w.forfun.com/fetch/62/624e27fde335d49e2dd3c6b75c6027a3.jpeg', fileName: '2d_image_1.jpeg' },
-            { url: 'https://w0.peakpx.com/wallpaper/42/267/HD-wallpaper-nature-scenery-scenery-nature.jpg', fileName: '2d_image_2.jpg' },
-            { url: 'https://c4.wallpaperflare.com/wallpaper/131/774/322/background-pictures-nature-hd-images-1920x1200-wallpaper-preview.jpg', fileName: '2d_image_3.jpg' }
-        ];
-
-        const _3dImageData = [
-            { url: 'https://wallpapers.com/images/featured/3d-33q6a18khxgta4ll.jpg', fileName: '3d_image_1.jpg' },
-            { url: 'https://c4.wallpaperflare.com/wallpaper/323/60/896/3d-2560x1440-desktop-wallpaper-preview.jpg', fileName: '3d_image_2.jpg' },
-            { url: 'https://i.pinimg.com/originals/f8/20/01/f82001c8ef0f754f9e0d6586acd227f8.jpg', fileName: '3d_image_3.jpg' }
-        ];
-
-        const _3dVideoData = [
-            { url: 'https://cdn.pixabay.com/vimeo/181785134/robot-5001.mp4?width=640&hash=e834f2be1a6ecaaedce51d092493385171afd9b2', fileName: '3d_video_1.mp4' },
-            { url: 'https://media.istockphoto.com/id/1488248251/video/modern-city-controlled-by-smart-artificial-intelligence-glowing-wireless-data.mp4?s=mp4-640x640-is&k=20&c=ejh81rxBGM-U6qX3Qw13EITGpc8_oq0RafFY7ffK-rQ=', fileName: '3d_video_2.mp4' },
-            { url: 'https://media.istockphoto.com/id/1397867940/video/talking-mesh-head-grid-head-conversation.mp4?s=mp4-640x640-is&k=20&c=sFghcZjgO_BkoTf9i0uYtUMadFwWcV0_BnEQvvlzRl4=', fileName: '3d_video_3.mp4' }
-        ];
-
-        appendElements('2d-images-container', _2dImageData, createImageElement);
-        appendElements('3d-images-container', _3dImageData, createImageElement);
-        appendElements('3d-videos-container', _3dVideoData, createVideoElement);
+        appendElements('2d-images-container', _2dImages, createImageElement);
+        appendElements('3d-images-container', _3dImages, createImageElement);
+        appendElements('3d-videos-container', _3dVideos, createVideoElement);
     </script>
 </body>
+
 </html>
